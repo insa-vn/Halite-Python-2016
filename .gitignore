@@ -3,3 +3,4 @@ halite
 *.log
 MyBot.py
 __pycache__
+.DS_Store
