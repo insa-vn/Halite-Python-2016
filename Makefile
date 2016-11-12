@@ -1,4 +1,6 @@
 clean:
 	rm *.hlt *.log
 zip:
-	zip -r MyBot.py MyUnzippedBot.py
+	zip -r zipped.zip MyBot.py
+run:
+	./runGame.sh && make zip
