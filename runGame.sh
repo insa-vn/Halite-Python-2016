@@ -1,3 +1,3 @@
 #!/bin/bash
 make clean
-./halite -d "10 10" "python3 MyBot.py" "python3 RandomBot.py" > log-script.log
+./halite -d "30 30" "python3 MyBot.py" "python3 RandomBot.py" > log-script.log

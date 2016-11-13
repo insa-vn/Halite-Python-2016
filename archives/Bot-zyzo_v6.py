@@ -16,6 +16,7 @@ sendInit('zyzo')
 f = open('log-analytics.log', 'w')
 f.write('')
 f.close()
+roundCnt = 0
 
 myID, gameMap = getInit()
 while True:
@@ -29,30 +30,15 @@ while True:
             if gameMap.getSite(curLoc).owner == myID:
                 movedPiece = False
                 for d in CARDINALS:
-                    weakerEnemy = (
+                    if (
                         gameMap.getSite(curLoc, d).owner != myID
                         and gameMap.getSite(curLoc, d).strength
                         < gameMap.getSite(curLoc).strength
-                    )
-                    if weakerEnemy:
+                    ):
                         moves.append(Move(curLoc, d))
                         analytics['a'] += 1
                         movedPiece = True
                         break
-                if not movedPiece:
-                    for d in CARDINALS:
-                        improvableNeighbour = (gameMap.getSite(curLoc, d).strength == 255 
-                            and (
-                            gameMap.getSite(curLoc, d).owner == myID
-                            and gameMap.getSite(curLoc, d).strength
-                            + gameMap.getSite(curLoc).strength < 255
-                            )
-                        )
-                        if improvableNeighbour:
-                            moves.append(Move(curLoc, d))
-                            analytics['a'] += 1
-                            movedPiece = True
-                            break
                 if not movedPiece:
                     moves.append(Move(curLoc, STILL))
                     analytics['s'] += 1
@@ -65,3 +51,4 @@ while True:
     f.write(str([str(move.loc.x) + str(move.loc.y) + str(move.direction) for move in moves]) + '\n')
     f.close()
     sendFrame(moves)
+    roundCnt += 1
