@@ -24,7 +24,7 @@ MY_ID, GAME_MAP = getInit()
 while True:
     MOVES = []
     GAME_MAP = getFrame()
-    FILE_WRITER = open('log-ANALYTICS.log', 'a')
+    FILE_WRITER = open('log-analytics.log', 'a')
     ANALYTICS = {'s': 0, 'a': 0, 'm': 0}
     for y in range(GAME_MAP.height):
         for x in range(GAME_MAP.width):
@@ -32,29 +32,15 @@ while True:
             if GAME_MAP.getSite(curLoc).owner == MY_ID:
                 movedPiece = False
                 for d in CARDINALS:
-                    weakerEnemy = (
-                        GAME_MAP.getSite(curLoc, d).owner != MY_ID
-                        and GAME_MAP.getSite(curLoc, d).strength
-                        < GAME_MAP.getSite(curLoc).strength
-                    )
-                    if weakerEnemy:
+                    if (
+                            GAME_MAP.getSite(curLoc, d).owner != MY_ID
+                            and GAME_MAP.getSite(curLoc, d).strength
+                            < GAME_MAP.getSite(curLoc).strength
+                    ):
                         MOVES.append(Move(curLoc, d))
                         ANALYTICS['a'] += 1
                         movedPiece = True
                         break
-                if not movedPiece:
-                    for d in CARDINALS:
-                        improvableNeighbour = (
-                            GAME_MAP.getSite(curLoc, d).strength == 255
-                            and GAME_MAP.getSite(curLoc, d).owner == MY_ID
-                            and GAME_MAP.getSite(curLoc, d).strength
-                            + GAME_MAP.getSite(curLoc).strength < 255
-                        )
-                        if improvableNeighbour:
-                            MOVES.append(Move(curLoc, d))
-                            ANALYTICS['a'] += 1
-                            movedPiece = True
-                            break
                 if not movedPiece:
                     MOVES.append(Move(curLoc, STILL))
                     ANALYTICS['s'] += 1
