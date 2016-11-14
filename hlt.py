@@ -1,3 +1,5 @@
+"""
+"""
 import random
 import math
 import copy
@@ -29,7 +31,7 @@ class Move:
         self.direction = direction
 
 class GameMap:
-    def __init__(self, width = 0, height = 0, numberOfPlayers = 0):
+    def __init__(self, width=0, height=0, numberOfPlayers=0):
         self.width = width
         self.height = height
         self.contents = []
@@ -91,6 +93,6 @@ class GameMap:
                 else:
                     l.x -= 1
         return l
-    def getSite(self, l, direction = STILL):
+    def getSite(self, l, direction=STILL):
         l = self.getLocation(l, direction)
         return self.contents[l.y][l.x]
